@@ -1,0 +1,90 @@
+{
+  "authors": [
+    {
+      "email": "rony@nurrony.info",
+      "homepage": "https://www.nurrony.info",
+      "name": "Nur Rony"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "FluentTransactionBuilder\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FluentTransactionBuilder\\Tests\\": "tests/"
+    }
+  },
+  "description": "Fluent Transaction Builder to keep DB transaction sane and predictable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "FluentTransactionBuilder\\TransactionBuilderServiceProvider"
+      ]
+    }
+  },
+  "homepage": "https://github.com/nurrony/fluent-transaction-builder",
+  "keywords": [
+    "Nur Rony",
+    "laravel",
+    "fluent-transaction-builder",
+    "transaction-builder",
+    "laravel-transaction-builder",
+    "FluentTransactionBuilder",
+    "chainable transaction",
+    "transaction",
+    "database",
+    "database transaction"
+  ],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "name": "nurrony/fluent-transaction-builder",
+  "prefer-stable": true,
+  "ramsey/conventional-commits": {
+    "config": {
+      "bodyRequired": false,
+      "bodyWrapWidth": null,
+      "descriptionCase": "lower",
+      "descriptionEndMark": null,
+      "requiredFooters": [],
+      "scopeCase": null,
+      "scopeRequired": false,
+      "scopes": [],
+      "typeCase": "lower",
+      "types": [
+        "fix",
+        "feat",
+        "docs",
+        "ci",
+        "style",
+        "revert",
+        "refactor",
+        "perf",
+        "test",
+        "build",
+        "chore"
+      ]
+    }
+  },
+  "require": {
+    "php": "^8.2"
+  },
+  "require-dev": {
+    "captainhook/captainhook": "^5.25",
+    "ext-pdo": "*",
+    "fakerphp/faker": "^1.24.1",
+    "laravel/pint": "^1.25.1",
+    "orchestra/testbench": "^10.6.0",
+    "phpunit/phpunit": "^12.3.12",
+    "ramsey/conventional-commits": "^1.6"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "vendor/bin/captainhook install --quiet --no-interaction"
+    ],
+    "test": "phpunit"
+  },
+  "type": "package",
+  "version": "1.0.0-alpha1"
+}

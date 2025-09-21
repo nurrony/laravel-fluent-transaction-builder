@@ -1,0 +1,46 @@
+{
+  "commit-msg": {
+    "actions": [
+      {
+        "action": "\\Ramsey\\CaptainHook\\ValidateConventionalCommit"
+      }
+    ],
+    "enabled": true
+  },
+  "pre-commit": {
+    "actions": [
+      {
+        "action": "\\CaptainHook\\App\\Hook\\File\\Action\\DoesNotContainRegex",
+        "options": {
+          "fileExtensions": [
+            "inc",
+            "php"
+          ],
+          "regex": "#print_r|var_dump|dd#i",
+          "regexName": "debug output"
+        }
+      },
+      {
+        "action": "\\CaptainHook\\App\\Hook\\Branch\\Action\\EnsureNaming",
+        "options": {
+          "regex": "#master|main|develop|staging|bugfix/[a-z]+-[0-9]+|feature/[a-z]+-[0-9]+#"
+        }
+      },
+      {
+        "action": "vendor/bin/pint"
+      },
+      {
+        "action": "vendor/bin/phpunit"
+      }
+    ],
+    "enabled": true
+  },
+  "prepare-commit-msg": {
+    "actions": [
+      {
+        "action": "\\Ramsey\\CaptainHook\\PrepareConventionalCommit"
+      }
+    ],
+    "enabled": true
+  }
+}
