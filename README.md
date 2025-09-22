@@ -9,24 +9,28 @@ A lightweight fluent wrapper around Laravel `DB::transaction()` with support for
 Add this following in your `composer.json` until it is ready to release
 
 ```json
-...
-    "repositories": [
+{
+  ...
+  "repositories": [
     {
-        "type": "package",
-        "package": {
-            "name": "nurrony/laravel-fluent-transaction-builder", //give package name to anything, must be unique
-            "version": "1.0.0-alpha1",
-            "source": {
-                "url": "https://github.com/nurrony/laravel-fluent-transaction-builder.git", //git url
-                "type": "git",
-                "reference": "master" //git branch-name
-            }
+      "type": "package",
+      "package": {
+        "name": "nurrony/laravel-fluent-transaction-builder",
+        "version": "1.0.0-alpha1",
+        "source": {
+          "url": "https://github.com/nurrony/laravel-fluent-transaction-builder.git",
+          "type": "git",
+          "reference": "main"
         }
-    }],
-    "require" : {
-        "nurrony/laravel-fluent-transaction-builder": "1.0.0-alpha1"
-    },
-...
+      }
+    }
+  ],
+  "require": {
+    "nurrony/laravel-fluent-transaction-builder": "1.0.0-alpha1"
+  },
+  ...
+}
+
 ```
 
 ## Methods
