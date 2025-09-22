@@ -3,5 +3,5 @@
 .phpunit.result.cache
 .DS_Store
 coverage/
-phpunit-report.xml
+phpunit-*.xml
 composer.lock

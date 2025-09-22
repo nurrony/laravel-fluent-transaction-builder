@@ -1,0 +1,42 @@
+name: Coverage Report
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup PHP Environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: dom, mbstring, zip
+          coverage: none
+
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-php-8.2-coverage-composer-${{ hashFiles('composer.json') }}
+
+      - name: Install Composer Dependencies
+        run: composer install --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Run PHPUnit Coverage
+        run: composer coverage
+      - name: Upload coverage results to Coveralls
+        env:
+            COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: |
+            composer global require php-coveralls/php-coveralls
+            php-coveralls --coverage_clover=./phpunit-clover.xml -v

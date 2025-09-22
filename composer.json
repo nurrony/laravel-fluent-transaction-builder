@@ -82,9 +82,9 @@
   },
   "scripts": {
     "coverage": [
-      "rm -rf ./coverage",
+      "rm -rf ./coverage, phpunit-*.xml",
       "echo '✅ Old coverage removed.'",
-      "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage",
+      "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage --coverage-clover phpunit-clover.xml",
       "echo '📊 New coverage report generated in ./coverage/'"
     ],
     "post-install-cmd": [

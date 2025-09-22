@@ -1,11 +1,11 @@
-# Fluent Transaction Builder
+# Laravel Fluent Transaction Builder
 
 A lightweight fluent wrapper around Laravel `DB::transaction()` with support for retries, on-exception callbacks, and result access.
 
 ## Installation
 
 ```bash
-composer require nurrony/fluent-transaction-builder
+composer require nurrony/laravel-fluent-transaction-builder
 ```
 
 ## Methods

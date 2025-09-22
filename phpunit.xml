@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php"
   colors="true"
-  verbose="true"
-  stopOnFailure="false"
-  beStrictAboutOutputDuringTests="false"
+  verbose="false"
+  stopOnFailure="true"
+  beStrictAboutOutputDuringTests="true"
   failOnRisky="true"
-  failOnWarning="true"
+  failOnWarning="false"
 >
   <coverage processUncoveredFiles="true">
     <include>
