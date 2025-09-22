@@ -36,5 +36,7 @@ jobs:
         run: composer coverage
       - name: Upload coverage results to Coveralls
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: vendor/bin/php-coveralls --coverage_clover=./phpunit-clover.xml -v
+            COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: |
+            wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.8.0/php-coveralls.phar && chmod +x ./php-coveralls.phar
+            ./php-coveralls.phar --coverage_clover=./phpunit-clover.xml -v
