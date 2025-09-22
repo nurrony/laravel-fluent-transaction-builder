@@ -33,10 +33,10 @@ jobs:
         run: composer install --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Run PHPUnit Coverage
-        run: composer coverage
+        run:  XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-clover /tmp/phpunit-clover.xml
       - name: Upload coverage results to Coveralls
         env:
             COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
             wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.8.0/php-coveralls.phar && chmod +x ./php-coveralls.phar
-            ./php-coveralls.phar --coverage_clover=./phpunit-clover.xml -v
+            php php-coveralls.phar --json_path=/tmp/coveralls-upload.json --coverage_clover=/tmp/phpunit-clover.xml -v
