@@ -20,8 +20,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          extensions: dom, mbstring, zip
-          coverage: none
+          extensions: dom, mbstring, zip, xdebug
+          coverage: xdebug
 
       - name: Cache Composer Dependencies
         uses: actions/cache@v3
