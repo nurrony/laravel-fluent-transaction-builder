@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Facade;
 /**
  * Facade for FluentTransactionBuilder.
  *
- * @method static Transaction build() - Creates a new instance of the Transaction class so that you can chain methods on it.
+ * @method static Transaction build() - Creates a new instance of the
+ *                                    Transaction class so that you can chain methods on it.
  *
- * @class FluentTransactionBuilder
+ * @class TransactionBuilder
  */
 final class TransactionBuilder extends Facade
 {
     /**
-     * Get the registered name of the component.
+     * Get the facade accessor
      */
     protected static function getFacadeAccessor(): string
     {
