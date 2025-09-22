@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.composer/cache/files
-          key: dependencies-php-8.2-coverage-composer-${{ hashFiles('composer.json') }}
+          key: dependencies-php-8.4-coverage-composer-${{ hashFiles('composer.json') }}
 
       - name: Install Composer Dependencies
         run: composer install --no-interaction --no-scripts --no-progress --prefer-dist

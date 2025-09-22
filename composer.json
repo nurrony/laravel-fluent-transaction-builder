@@ -24,7 +24,7 @@
       ]
     }
   },
-  "homepage": "https://github.com/nurrony/fluent-transaction-builder",
+  "homepage": "https://github.com/nurrony/laravel-fluent-transaction-builder",
   "keywords": [
     "Nur Rony",
     "laravel",
@@ -39,7 +39,7 @@
   ],
   "license": "MIT",
   "minimum-stability": "dev",
-  "name": "nurrony/fluent-transaction-builder",
+  "name": "nurrony/laravel-fluent-transaction-builder",
   "prefer-stable": true,
   "ramsey/conventional-commits": {
     "config": {

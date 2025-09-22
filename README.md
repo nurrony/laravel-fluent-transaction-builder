@@ -1,11 +1,32 @@
 # Laravel Fluent Transaction Builder
 
+[![Coverage Status](https://coveralls.io/repos/github/nurrony/laravel-fluent-transaction-builder/badge.svg?branch=main)](https://coveralls.io/github/nurrony/laravel-fluent-transaction-builder?branch=main)
+
 A lightweight fluent wrapper around Laravel `DB::transaction()` with support for retries, on-exception callbacks, and result access.
 
 ## Installation
 
-```bash
-composer require nurrony/laravel-fluent-transaction-builder
+Add this following in your `composer.json` until it is ready to release
+
+```json
+...
+    "repositories": [
+    {
+        "type": "package",
+        "package": {
+            "name": "nurrony/laravel-fluent-transaction-builder", //give package name to anything, must be unique
+            "version": "1.0.0-alpha1",
+            "source": {
+                "url": "https://github.com/nurrony/laravel-fluent-transaction-builder.git", //git url
+                "type": "git",
+                "reference": "master" //git branch-name
+            }
+        }
+    }],
+    "require" : {
+        "nurrony/laravel-fluent-transaction-builder": "1.0.0-alpha1"
+    },
+...
 ```
 
 ## Methods
