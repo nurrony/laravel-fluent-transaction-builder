@@ -24,10 +24,10 @@ class TransactionBuilderTest extends TestCase
             ->andReturn($expected);
 
         /* EXECUTE */
-        $transaction = TransactionBuilder::build()->run(fn () => $expected);
+        $transaction = TransactionBuilder::build()->execute(fn () => $expected);
 
         /* ASSERT */
-        $this->assertSame($expected, $transaction->result());
+        $this->assertSame($expected, $transaction->end());
     }
 
     #[Test]
@@ -43,10 +43,10 @@ class TransactionBuilderTest extends TestCase
         /* EXECUTE */
         $transaction = TransactionBuilder::build()
             ->attempts(5)
-            ->run(fn () => $expected);
+            ->execute(fn () => $expected);
 
         /* ASSERT */
-        $this->assertSame($expected, $transaction->result());
+        $this->assertSame($expected, $transaction->end());
     }
 
     #[Test]
@@ -59,11 +59,11 @@ class TransactionBuilderTest extends TestCase
             ->andThrow($exception);
 
         /* EXECUTE */
-        $transaction = TransactionBuilder::build()->run(fn () => null);
+        $transaction = TransactionBuilder::build()->execute(fn () => null);
 
         /* ASSERT */
         $this->expectExceptionObject($exception);
-        $transaction->result();
+        $transaction->end();
     }
 
     #[Test]
@@ -78,10 +78,10 @@ class TransactionBuilderTest extends TestCase
         /* EXECUTE */
         $transaction = TransactionBuilder::build()
             ->disableThrow()
-            ->run(fn () => null);
+            ->execute(fn () => null);
 
         /* ASSERT */
-        $this->assertNull($transaction->result());
+        $this->assertNull($transaction->end());
     }
 
     #[Test]
@@ -97,13 +97,13 @@ class TransactionBuilderTest extends TestCase
 
         /* EXECUTE */
         TransactionBuilder::build()
-            ->run(fn () => null)
+            ->execute(fn () => null)
             ->onException(function (Throwable $e) use (&$called, &$caught) {
                 $called = true;
                 $caught = $e;
             })
             ->disableThrow()
-            ->result();
+            ->end();
 
         /* ASSERT */
         $this->assertTrue($called);
@@ -123,7 +123,7 @@ class TransactionBuilderTest extends TestCase
 
         /* EXECUTE */
         TransactionBuilder::build()
-            ->run(fn () => null)
+            ->execute(fn () => null)
             ->onException(function (Throwable $e) use (&$called, &$caught) {
                 $called = true;
                 $caught = $e;
@@ -146,9 +146,9 @@ class TransactionBuilderTest extends TestCase
 
         /* EXECUTE */
         TransactionBuilder::build()
-            ->run(fn () => $expected)
+            ->execute(fn () => $expected)
             ->onException(fn () => $called = true)
-            ->result();
+            ->end();
 
         /* ASSERT */
         $this->assertFalse($called);
@@ -163,10 +163,10 @@ class TransactionBuilderTest extends TestCase
             ->andReturn(null);
 
         /* EXECUTE */
-        $transaction = TransactionBuilder::build()->run(function () {});
+        $transaction = TransactionBuilder::build()->execute(function () {});
 
         /* ASSERT */
-        $this->assertNull($transaction->result());
+        $this->assertNull($transaction->end());
     }
 
     #[Test]
@@ -180,11 +180,11 @@ class TransactionBuilderTest extends TestCase
 
         /* EXECUTE */
         $transaction = TransactionBuilder::build()
-            ->run(fn () => null)
+            ->execute(fn () => null)
             ->disableThrow();
 
         /* ASSERT */
-        $this->assertNull($transaction->result());
+        $this->assertNull($transaction->end());
     }
 
     #[Test]
@@ -196,7 +196,7 @@ class TransactionBuilderTest extends TestCase
         /* EXECUTE & ASSERT */
         $this->assertSame($transaction, $transaction->attempts(2));
         $this->assertSame($transaction, $transaction->disableThrow());
-        $this->assertSame($transaction, $transaction->run(fn () => 'x'));
+        $this->assertSame($transaction, $transaction->execute(fn () => 'x'));
         $this->assertSame($transaction, $transaction->onException(fn () => null));
     }
 
@@ -216,12 +216,12 @@ class TransactionBuilderTest extends TestCase
             ->andReturn('nested');
 
         /* EXECUTE */
-        $transaction = TransactionBuilder::build()->run(function () {
-            return TransactionBuilder::build()->run(fn () => 'nested')->result();
+        $transaction = TransactionBuilder::build()->execute(function () {
+            return TransactionBuilder::build()->execute(fn () => 'nested')->end();
         });
 
         /* ASSERT */
-        $this->assertSame('nested', $transaction->result());
+        $this->assertSame('nested', $transaction->end());
     }
 
     #[Test]
@@ -240,19 +240,19 @@ class TransactionBuilderTest extends TestCase
         $caught = null;
 
         /* EXECUTE */
-        $transaction = TransactionBuilder::build()->run(function () use (&$caught) {
+        $transaction = TransactionBuilder::build()->execute(function () use (&$caught) {
             return TransactionBuilder::build()
-                ->run(fn () => null)
+                ->execute(fn () => null)
                 ->onException(function (Throwable $e) use (&$caught) {
                     $caught = $e;
                 })
                 ->disableThrow()
-                ->result();
+                ->end();
         });
 
         /* ASSERT */
         $this->assertSame($ex, $caught);
-        $this->assertNull($transaction->result());
+        $this->assertNull($transaction->end());
     }
 
     #[Test]
@@ -265,8 +265,8 @@ class TransactionBuilderTest extends TestCase
         $transaction = TransactionBuilder::build();
 
         /* EXECUTE */
-        $first = $transaction->run(fn () => 'first')->result();
-        $second = $transaction->run(fn () => 'second')->result();
+        $first = $transaction->execute(fn () => 'first')->end();
+        $second = $transaction->execute(fn () => 'second')->end();
 
         /* ASSERT */
         $this->assertSame('first', $first);

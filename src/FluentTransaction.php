@@ -55,7 +55,7 @@ final class FluentTransaction
      * @param  Closure(): self  $callback
      * @return $this
      */
-    public function run(?Closure $callback = null): self
+    public function execute(?Closure $callback = null): self
     {
         $this->callback = $callback;
 
@@ -104,7 +104,7 @@ final class FluentTransaction
      *
      * @throws Throwable
      */
-    public function result(): mixed
+    public function end(): mixed
     {
         // If an exception was caught and the shouldThrow flag is set to true, throw the exception.
         if ($this->exception && $this->shouldThrow) {
