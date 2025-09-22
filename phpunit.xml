@@ -1,4 +1,18 @@
-<phpunit bootstrap="vendor/autoload.php" colors="true">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+  colors="true"
+  verbose="true"
+  stopOnFailure="false"
+  beStrictAboutOutputDuringTests="false"
+  failOnRisky="true"
+  failOnWarning="true"
+>
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory>src</directory>
+    </include>
+  </coverage>
+
   <testsuites>
     <testsuite name="Application Tests">
       <directory>./tests</directory>
@@ -7,5 +21,6 @@
 
   <php>
     <env name="APP_ENV" value="testing" />
+    <env name="XDEBUG_MODE" value="coverage" />
   </php>
 </phpunit>

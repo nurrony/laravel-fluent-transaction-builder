@@ -76,10 +76,17 @@
     "fakerphp/faker": "^1.24",
     "laravel/pint": "1.20.0",
     "orchestra/testbench": "^8",
+    "phpunit/php-code-coverage": "^10",
     "phpunit/phpunit": "^10",
     "ramsey/conventional-commits": "^1.6"
   },
   "scripts": {
+    "coverage": [
+      "rm -rf ./coverage",
+      "echo '✅ Old coverage removed.'",
+      "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html coverage",
+      "echo '📊 New coverage report generated in ./coverage/'"
+    ],
     "post-install-cmd": [
       "vendor/bin/captainhook install --quiet --no-interaction"
     ],
