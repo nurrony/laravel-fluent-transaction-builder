@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Throwable;
 
 /**
- * Transaction class to handle database transactions with retry attempts, on-failure callbacks, and result retrieval.
+ * Transaction class to handle database transactions with retry attempts,
+ * on-failure callbacks, and result retrieval.
  *
  * @class Transaction
  */
@@ -21,14 +22,14 @@ final class FluentTransaction
 
     protected ?Closure $callback = null;
 
-    protected ?Closure $onFailure = null;
+    protected ?Closure $onException = null;
 
     protected mixed $result = null;
 
     protected ?Throwable $exception = null;
 
     /**
-     * Create a new instance of the Transaction class.
+     * Create a new instance of the FluentTransaction class.
      */
     public static function build(): self
     {
@@ -38,7 +39,7 @@ final class FluentTransaction
     /**
      * Set the number of attempts for the transaction and return the instance.
      *
-     *
+     * @param  int  $attempts  attemps of try database transactions
      * @return $this
      */
     public function attempts(int $attempts): self
@@ -51,7 +52,7 @@ final class FluentTransaction
     /**
      * Set the callback to be executed within the transaction.
      *
-     *
+     * @param  Closure(): self  $callback
      * @return $this
      */
     public function run(?Closure $callback = null): self
@@ -71,16 +72,16 @@ final class FluentTransaction
     /**
      * Set the callback to be executed on failure (If we caught an exception in the run method).
      *
-     * @param  Closure(): void  $onFailure
+     * @param  Closure(): void  $onException
      * @return $this
      */
-    public function onFailure(Closure $onFailure): self
+    public function onException(Closure $onException): self
     {
-        $this->onFailure = $onFailure;
+        $this->onException = $onException;
 
-        // The caught exception is passed to the onFailure callback as function($e) { ... } so that you can handle/use it.
+        // The caught exception is passed to the onException callback as function($e) { ... } so that you can handle/use it.
         if ($this->exception) {
-            $onFailure($this->exception);
+            $onException($this->exception);
         }
 
         return $this;
@@ -100,7 +101,6 @@ final class FluentTransaction
 
     /**
      * Get the result of the transaction or throw the exception if any exception was occurred.
-     *
      *
      * @throws Throwable
      */

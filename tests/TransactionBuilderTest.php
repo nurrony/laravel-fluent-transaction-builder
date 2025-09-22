@@ -98,7 +98,7 @@ class TransactionBuilderTest extends TestCase
         /* EXECUTE */
         TransactionBuilder::build()
             ->run(fn () => null)
-            ->onFailure(function (Throwable $e) use (&$called, &$caught) {
+            ->onException(function (Throwable $e) use (&$called, &$caught) {
                 $called = true;
                 $caught = $e;
             })
@@ -124,7 +124,7 @@ class TransactionBuilderTest extends TestCase
         /* EXECUTE */
         TransactionBuilder::build()
             ->run(fn () => null)
-            ->onFailure(function (Throwable $e) use (&$called, &$caught) {
+            ->onException(function (Throwable $e) use (&$called, &$caught) {
                 $called = true;
                 $caught = $e;
             });
@@ -147,7 +147,7 @@ class TransactionBuilderTest extends TestCase
         /* EXECUTE */
         TransactionBuilder::build()
             ->run(fn () => $expected)
-            ->onFailure(fn () => $called = true)
+            ->onException(fn () => $called = true)
             ->result();
 
         /* ASSERT */
@@ -197,7 +197,7 @@ class TransactionBuilderTest extends TestCase
         $this->assertSame($transaction, $transaction->attempts(2));
         $this->assertSame($transaction, $transaction->disableThrow());
         $this->assertSame($transaction, $transaction->run(fn () => 'x'));
-        $this->assertSame($transaction, $transaction->onFailure(fn () => null));
+        $this->assertSame($transaction, $transaction->onException(fn () => null));
     }
 
     #[Test]
@@ -243,7 +243,7 @@ class TransactionBuilderTest extends TestCase
         $transaction = TransactionBuilder::build()->run(function () use (&$caught) {
             return TransactionBuilder::build()
                 ->run(fn () => null)
-                ->onFailure(function (Throwable $e) use (&$caught) {
+                ->onException(function (Throwable $e) use (&$caught) {
                     $caught = $e;
                 })
                 ->disableThrow()

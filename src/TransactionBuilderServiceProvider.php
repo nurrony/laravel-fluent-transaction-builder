@@ -18,14 +18,17 @@ final class TransactionBuilderServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void {}
+    public function boot(): void
+    {
+        // silence is golden
+    }
 
     /**
-     * Register any application services.
+     * Register FluentTransactionBuilder
      */
     public function register(): void
     {
-        /*
+        /**
          * When Facade is called, it will return an instance of FluentTransactionBuilder.
          */
         $this->app->bind('fluent-transaction-builder', function () {

@@ -12,7 +12,7 @@ composer require nurrony/fluent-transaction-builder
 - `build()`: Create a new instance of the FluentTransactionBuilder.
 - `attempts(int $attempts)`: The number of attempts to run the transaction. - default is 1.
 - `run(callable $callback)`: The callback to be executed within the transaction.
-- `onFailure(callable $callback)`: The callback to be executed if the transaction fails after all attempts.
+- `onException(callable $callback)`: The callback to be executed if the transaction fails after all attempts.
 - `disableThrow()`: Disable throwing exceptions on failure. - default is false
 - `result()`: Get the result of the transaction. If the transaction fails, it will return null if `disableThrow()` is called, or throw an exception otherwise.
 
@@ -35,10 +35,10 @@ $result = FluentTransactionBuilder::build()
     ->run(function () {
         throw new \Exception("fail");
     })
-    ->onFailure(function ($exception) {
+    ->onException(function ($exception) {
         logger()->error($exception->getMessage());
     })
-    ->disableThrow() // optional if you want to disable throwing exceptions since you already have onFailure callback
+    ->disableThrow() // optional if you want to disable throwing exceptions since you already have onException callback
     ->result();
 ```
 
@@ -54,7 +54,7 @@ $result = FluentTransactionBuilder::build()
             ->run(function () {
                 // inner transaction logic
             })
-            ->onFailure(function ($exception) {
+            ->onException(function ($exception) {
                 logger()->error($exception->getMessage());
             })
             ->result();
