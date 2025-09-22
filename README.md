@@ -104,5 +104,19 @@ $result = FluentTransactionBuilder::build()
 
 > If you find this package useful, please consider ⭐ it to show your support!
 
+## 📗 Upcoming features
+
+- [ ] Expose API via Controller
+- [ ] Auto Handle DB Transactions via Middleware
+- [ ] Transaction Hooks
+    - [ ] preException
+    - [ ] postException
+    - [ ] preRetry
+    - [ ] postRetry
+    - [ ] onRetry
+    - [ ] preExecution
+    - [ ] postExecution
+
+
 ## 📜 License
 Fluent Transaction Builder for Laravel is an open-sourced software licensed under the **[MIT license](LICENSE)**.
