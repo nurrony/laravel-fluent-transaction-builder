@@ -42,7 +42,7 @@ class TransactionBuilderTest extends TestCase
 
         /* EXECUTE */
         $transaction = TransactionBuilder::build()
-            ->attempts(5)
+            ->retry(5)
             ->execute(fn () => $expected);
 
         /* ASSERT */
@@ -194,7 +194,7 @@ class TransactionBuilderTest extends TestCase
         $transaction = TransactionBuilder::build();
 
         /* EXECUTE & ASSERT */
-        $this->assertSame($transaction, $transaction->attempts(2));
+        $this->assertSame($transaction, $transaction->retry(2));
         $this->assertSame($transaction, $transaction->disableThrow());
         $this->assertSame($transaction, $transaction->execute(fn () => 'x'));
         $this->assertSame($transaction, $transaction->onException(fn () => null));

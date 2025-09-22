@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\DB;
 use Throwable;
 
 /**
- * Transaction class to handle database transactions with retry attempts,
+ * Transaction class to handle database transactions with retry retryCount,
  * on-failure callbacks, and result retrieval.
  *
  * @class Transaction
  */
 final class FluentTransaction
 {
-    protected int $attempts = 1;
+    protected int $retryCount = 1;
 
     protected bool $shouldThrow = true;
 
@@ -37,14 +37,14 @@ final class FluentTransaction
     }
 
     /**
-     * Set the number of attempts for the transaction and return the instance.
+     * Set the number of retry for the transaction and return the instance.
      *
-     * @param  int  $attempts  attemps of try database transactions
+     * @param  int  $retryCount  number of try database transactions
      * @return $this
      */
-    public function attempts(int $attempts): self
+    public function retry(int $retryCount): self
     {
-        $this->attempts = $attempts;
+        $this->retryCount = $retryCount;
 
         return $this;
     }
@@ -61,7 +61,7 @@ final class FluentTransaction
 
         // Execute the callback within a transaction and in case of failure, save the exception.
         try {
-            $this->result = DB::transaction($callback, $this->attempts);
+            $this->result = DB::transaction($callback, $this->retryCount);
         } catch (Throwable $e) {
             $this->exception = $e;
         }

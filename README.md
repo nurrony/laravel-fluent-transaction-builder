@@ -1,6 +1,6 @@
 # Fluent Transaction Builder
 
-A lightweight fluent wrapper around Laravel `DB::transaction()` with support for retries, on-failure callbacks, and result access.
+A lightweight fluent wrapper around Laravel `DB::transaction()` with support for retries, on-exception callbacks, and result access.
 
 ## Installation
 
@@ -10,17 +10,17 @@ composer require nurrony/fluent-transaction-builder
 
 ## Methods
 - `build()`: Create a new instance of the FluentTransactionBuilder.
-- `attempts(int $attempts)`: The number of attempts to run the transaction. - default is 1.
+- `retry(int $retryCount)`: The number of retry count to run the transaction. - default is 1.
 - `execute(callable $callback)`: The callback to be executed within the transaction.
-- `onException(callable $callback)`: The callback to be executed if the transaction fails after all attempts.
+- `onException(callable $callback)`: The callback to be executed if the transaction fails after all retry.
 - `disableThrow()`: Disable throwing exceptions on failure. - default is false
-- `end()`: Get the result of the transaction. If the transaction fails, it will return null if `disableThrow()` is called, or throw an exception otherwise.
+- `end()`: Get the result of the transaction. If the transaction fails, it will return `null` if `disableThrow()` is called, or `throw an exception` otherwise.
 
-## Usage
+## How to use it
 
 ```php
 $result = FluentTransactionBuilder::build()
-    ->attempts(3) // number of attempts
+    ->retry(3) // number of retry
     ->execute(function () {
         // your transaction logic
         return 'done';
@@ -28,7 +28,7 @@ $result = FluentTransactionBuilder::build()
     ->end();
 ```
 
-### On Failure Callback
+### On Exception Callback
 
 ```php
 $result = FluentTransactionBuilder::build()
@@ -50,7 +50,7 @@ $result = FluentTransactionBuilder::build()
         // outer transaction logic
 
         FluentTransactionBuilder::build()
-            ->attempts(2)
+            ->retry(2)
             ->execute(function () {
                 // inner transaction logic
             }) ->onException(function ($exception) {
@@ -73,11 +73,11 @@ $result = FluentTransactionBuilder::build()
     ->end();
 ```
 
-## 💫 Contributing
+## 🫵 Contributing
 
 > **Your contributions are very welcome!** If you'd like to improve this package, simply create a pull request with your changes. Your efforts help enhance its functionality and documentation.
 
 > If you find this package useful, please consider ⭐ it to show your support!
 
 ## 📜 License
-Transaction Builder for Laravel is an open-sourced software licensed under the **[MIT license](LICENSE)**.
+Fluent Transaction Builder for Laravel is an open-sourced software licensed under the **[MIT license](LICENSE)**.
